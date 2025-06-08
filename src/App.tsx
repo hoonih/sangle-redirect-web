@@ -1,15 +1,21 @@
-import './App.css'
-import {useEffect} from "react";
+import './App.css';
+import { useEffect } from "react";
 
 function App() {
     useEffect(() => {
-        // 페이지가 로드되자마자 리다이렉트 시도
-        window.location.href = 'sangle://nfcpos/3'
-    }, [])
+        const params = new URLSearchParams(window.location.search);
+        const paramValue = params.get('param');
+
+        if (paramValue) {
+            window.location.href = `sangle://nfcpos/${paramValue}`;
+        }
+    }, []);
 
     const handleRedirect = () => {
-        window.location.href = 'sangle://nfcpos/3'
-    }
+        const params = new URLSearchParams(window.location.search);
+        const paramValue = params.get('param') || 'default'; // 기본값도 설정 가능
+        window.location.href = `sangle://nfcpos/${paramValue}`;
+    };
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
@@ -29,7 +35,7 @@ function App() {
                 생글로 이동
             </button>
         </div>
-    )
+    );
 }
 
-export default App
+export default App;
